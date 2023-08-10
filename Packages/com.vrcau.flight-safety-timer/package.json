@@ -1,6 +1,6 @@
 {
   "name": "com.vrcau.flight-safety-timer",
-  "displayName": "com.vrcau.flight-safety-timer",
+  "displayName": "Flight Safety Timer",
   "version": "0.0.1",
   "description": "A Flight Safety Timer",
   "gitDependencies": {},
