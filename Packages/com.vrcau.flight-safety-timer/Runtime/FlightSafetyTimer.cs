@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using SaccFlightAndVehicles;
 using TMPro;
 using UdonSharp;
@@ -32,7 +33,7 @@ namespace FlightSafetyTimerForSacc
         private void Start()
         {
             localPlayer = Networking.LocalPlayer;
-            
+
             if (localPlayer.IsOwner(gameObject) && lastCrash == -1)
             {
                 lastCrash = DateTimeOffset.Now.ToUnixTimeSeconds();
@@ -52,7 +53,8 @@ namespace FlightSafetyTimerForSacc
         private void LateUpdate()
         {
             var lastCrashDateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(this.lastCrash);
-            _UpdateText(template.Replace("{time}", (DateTimeOffset.Now - lastCrashDateTimeOffset).ToString(timeSpanTemplate)));
+            _UpdateText(template.Replace("{time}",
+                (DateTimeOffset.Now - lastCrashDateTimeOffset).ToString(timeSpanTemplate)));
         }
 
         private void _UpdateText(string value)
@@ -82,14 +84,15 @@ namespace FlightSafetyTimerForSacc
         private void AddToSaccEntities()
         {
             if (!(target is FlightSafetyTimer timer)) return;
-            
-            var entities = FindObjectsOfType<SaccEntity>();
+
+            var entities = FindObjectsOfType<SaccEntity>().Where(entity =>
+                entity.ExtensionUdonBehaviours.All(udon => udon.GetUdonTypeName() != nameof(FlightSafetyTimer)));
             foreach (var saccEntity in entities)
             {
                 var newArray = new UdonSharpBehaviour[saccEntity.ExtensionUdonBehaviours.Length + 1];
                 Array.Copy(saccEntity.ExtensionUdonBehaviours, newArray, saccEntity.ExtensionUdonBehaviours.Length);
                 newArray[newArray.Length - 1] = timer;
-
+                
                 saccEntity.ExtensionUdonBehaviours = newArray;
             }
         }
