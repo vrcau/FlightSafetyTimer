@@ -1,0 +1,19 @@
+{
+  "name": "com.vrcau.flight-safety-timer",
+  "displayName": "com.vrcau.flight-safety-timer",
+  "version": "0.0.1",
+  "description": "A Flight Safety Timer",
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.udonsharp": "1.1.9"
+  },
+  "author": {
+    "name": "VRChat Aerospace University",
+    "email": "lipww1234@foxmail.com",
+    "url": "https://yuxiaviation.com/"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "localPath": "E:\\ProjectEcho\\FlightSafetyTimer\\Packages\\com.vrcau.flight-safety-timer",
+  "type": "library"
+}
